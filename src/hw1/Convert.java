@@ -1,62 +1,107 @@
 package hw1;
-import java.util.Scanner;
+import java.util.*;
 
 public class Convert 
-{	
-	public static void main (String[] args)
+{
+	public static void BinToInt()
 	{
-		boolean isRunning = true;
-		while(isRunning)
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Give me a Binary To Convert Into Integer");
+		String input = scan.next();
+		try
 		{
-			System.out.println("What do you want to convert?");
-			System.out.println("1: String to Binary");
-			System.out.println("2: Integer to Binary");
-			System.out.println("3: Binary to Integer");
-			System.out.println("4: Binary Fraction to Decimal Fraction");
-			System.out.println("5: Decimal Fraction to Binary Fraction");
-			System.out.println("6: EXIT");
-			Scanner scan = new Scanner(System.in);
-			int s1 = scan.nextInt();
-			
-			switch(s1)
-			{
-			case 1:
-				String value1;
-				System.out.println("Give me a String To Convert Into Binary");
-				value1 = scan.next();
-				// String to Binary
-				break;
-			case 2:
-				int value2;
-				System.out.println("Give me an Integer To Convert Into Binary");
-				value2 = scan.nextInt();
-				//Integer to binary
-				break;
-			case 3:
-				System.out.println("Give me a Binary To Convert Into Integer");
-				//Binary to Integer
-				break;
-			case 4:
-				System.out.println("Give me a Binary Fraction To Convert Into Decimal Fraction");
-				//Binary Fraction to Decimal Fraction
-				break;
-			case 5:
-				System.out.println("Give me a Decimal Fraction To Convert Into Binary Fraction");
-				//Decimal Fraction to Binary Fraction
-				break;
-			case 6:
-				isRunning = false;
-				System.out.println("Exiting Program..");
-			default:
-				System.out.println("Dude.. Give me a valid condition..");
-			}
+			System.out.println(Integer.parseInt(input, 2));
+		}
+		
+		catch(Exception e)	//if input is invalid...
+		{
+			System.out.println("Dude... give me a valid input..");
+		}
+		scan.close();
+	}
+	
+	public static void IntToBin()
+	{
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Give me an Integer To Convert Into Binary");
+		int input = scan.nextInt();
+		try
+		{
+			System.out.println(Integer.toBinaryString(input));
+		}
+		catch(Exception e)	//if input is invalid...
+		{
+			System.out.println("Dude... give me a valid input..");
+		}
+		scan.close();
+	}
+	
+	public static void StrToBin()
+	{
+		Scanner scan = new Scanner(System.in);
+		char[] x1;
+		System.out.println("Give me a String To Convert Into Binary");
+		String input = scan.nextLine();
+		scan.close();
+		x1 = input.toCharArray(); 
+		for (char value: x1)
+		{
+			int output = value;
+			System.out.print(Integer.toBinaryString(output) + " ");
 		}
 	}
 	
-	//
-	public String convert(int value)
+	public static void BinFracToDecFrac()
 	{
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Give me a Binary Fraction To Convert Into Decimal Fraction");
+		double input = scan.nextDouble();
+		scan.close();
+		int int_part = (int)input;
+		ArrayList<Integer> BinaryIntegerPart = new ArrayList<>();
+		while (int_part != 0)
+		{
+			if((int_part % 2 == 1) && (int_part != 1))
+			{
+				BinaryIntegerPart.add(1);
+				int_part = (int_part-1)/2;
+			}
+			
+			if (int_part % 2 == 0)
+			{
+				BinaryIntegerPart.add(0);
+				int_part = int_part/2;
+			}
+			
+			if (int_part == 1)
+			{
+				BinaryIntegerPart.add(1);
+				int_part = 0;
+			}
+		}
+		double fract_part = input - (double)int_part;
+		double result_frac;
+		ArrayList<Integer> BinaryFractionPart = new ArrayList<>();
+		result_frac = fract_part * 2;
+		while(result_frac > .00000001)
+		{
+			if (result_frac > 1)
+			{
+				BinaryFractionPart.add(1);
+				result_frac = result_frac - 1;
+				result_frac = result_frac * 2;
+			}
+			if (result_frac < 1)
+			{
+				BinaryFractionPart.add(0);
+				result_frac = result_frac * 2;
+			}
+			if (result_frac == 1)
+			{
+				BinaryFractionPart.add(1);
+				result_frac = 0;
+			}
+		}
 		
 	}
-	
 }
