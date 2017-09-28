@@ -8,9 +8,9 @@ public class Convert
 	{
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Give me a Binary Number To Convert Into Decimal");
-		String input = scan.next();
 		try
 		{
+			String input = scan.next();
 			System.out.println(Integer.parseInt(input, 2));
 		}
 		
@@ -24,9 +24,9 @@ public class Convert
 	{
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Give me an Decimal To Convert Into Binary");
-		int input = scan.nextInt();
 		try
 		{
+			int input = scan.nextInt();
 			System.out.println(Integer.toBinaryString(input));
 		}
 		catch(Exception e)	//if input is invalid...
@@ -56,6 +56,10 @@ public class Convert
 		double input = scan.nextDouble();
 		try
 		{
+			if(input < 0)
+			{
+				throw new ArithmeticException("Input Not Valid!");  
+			}
 			int int_part = (int)input;
 			int int_part2 = int_part;
 			ArrayList<Integer> BinaryIntegerPart = new ArrayList<>();
@@ -81,35 +85,42 @@ public class Convert
 			}
 			double fract_part = input - (double)int_part2;
 			double result_frac;
-			ArrayList<Integer> BinaryFractionPart = new ArrayList<>();
-			result_frac = fract_part * 2;
-			while(result_frac > .00000001)
+			if(fract_part != 0)
 			{
-				if (result_frac > 1.0)
+				ArrayList<Integer> BinaryFractionPart = new ArrayList<>();
+				result_frac = fract_part * 2;
+				while(result_frac > .00000001)
 				{
-					BinaryFractionPart.add(1);
-					result_frac = result_frac - 1;
-					result_frac = result_frac * 2;
+					if (result_frac > 1.0)
+					{
+						BinaryFractionPart.add(1);
+						result_frac = result_frac - 1;
+						result_frac = result_frac * 2;
+					}
+					if (result_frac < 1.0)
+					{
+						BinaryFractionPart.add(0);
+						result_frac = result_frac * 2;
+					}
+					if ((result_frac > .95) && (result_frac < 1.00000001))
+					{
+						BinaryFractionPart.add(1);
+						result_frac = 0;
+					}
 				}
-				if (result_frac < 1.0)
+				for(int i = BinaryIntegerPart.size()-1; i >= 0; i--)
 				{
-					BinaryFractionPart.add(0);
-					result_frac = result_frac * 2;
+					System.out.print(BinaryIntegerPart.get(i));
 				}
-				if ((result_frac > .95) && (result_frac < 1.00000001))
+				System.out.print(".");
+				for(int value:BinaryFractionPart)
 				{
-					BinaryFractionPart.add(1);
-					result_frac = 0;
+					System.out.print(value);
 				}
 			}
-			for(int i = BinaryIntegerPart.size()-1; i >= 0; i--)
+			else
 			{
-				System.out.print(BinaryIntegerPart.get(i));
-			}
-			System.out.print(".");
-			for(int value:BinaryFractionPart)
-			{
-				System.out.print(value);
+				throw new ArithmeticException("Input Not Valid!");  
 			}
 		}
 		catch (Exception e)
